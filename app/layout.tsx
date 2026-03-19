@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Multiplayer Wordle",
   description: "A multiplayer Wordle game with friends",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

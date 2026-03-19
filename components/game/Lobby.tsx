@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Users, Plus, LogIn, Copy, Check, Gamepad2 } from "lucide-react";
+import { Users, Plus, LogIn, Copy, Check } from "lucide-react";
+import { WordleLogo } from "./WordleLogo";
 
 interface LobbyProps {
   onCreateRoom: (playerName: string) => void;
@@ -43,8 +44,8 @@ export function Lobby({ onCreateRoom, onJoinRoom, isConnecting, error }: LobbyPr
     <div className="max-w-lg mx-auto px-4">
       {/* Header */}
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-24 h-24 bg-[var(--nb-primary)] rounded-2xl border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] mb-6">
-          <Gamepad2 className="w-12 h-12" />
+        <div className="mb-6">
+          <WordleLogo size="lg" />
         </div>
         <h2 className="text-4xl font-black mb-3 tracking-tight">Multiplayer Wordle</h2>
         <p className="text-[var(--nb-text-light)] text-lg">
