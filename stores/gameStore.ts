@@ -74,7 +74,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
     const promise = new Promise<void>((resolve, reject) => {
       set({ isConnecting: true });
 
-      const newSocket = io("http://localhost:3000", {
+      const newSocket = io(typeof window !== "undefined" ? window.location.origin : "http://localhost:3000", {
         path: "/api/socket",
         addTrailingSlash: false,
         transports: ["polling", "websocket"],
