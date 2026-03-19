@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
 import type { LetterState } from "@/lib/types/game";
 import { Row } from "./Row";
 
@@ -9,6 +8,7 @@ interface BoardProps {
   letterStates: LetterState[][];
   currentGuess: string;
   maxGuesses?: number;
+  shakeRow?: number;
 }
 
 export function Board({
@@ -16,6 +16,7 @@ export function Board({
   letterStates,
   currentGuess,
   maxGuesses = 6,
+  shakeRow,
 }: BoardProps) {
   const rows = [];
 
@@ -32,6 +33,7 @@ export function Board({
         letterStates={states}
         isCurrentRow={isCurrentRow}
         isSubmitted={isSubmitted}
+        shake={shakeRow === i}
       />
     );
   }

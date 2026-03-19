@@ -17,7 +17,8 @@ export function DevWordReveal({ targetWord }: DevWordRevealProps) {
     <div className="fixed bottom-4 right-4 z-50">
       <button
         onClick={() => setIsVisible(!isVisible)}
-        className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all font-bold text-sm"
+        className="nb-button nb-button-sm"
+        style={{ backgroundColor: '#9333ea', color: 'white' }}
       >
         <Bug className="w-4 h-4" />
         {isVisible ? (

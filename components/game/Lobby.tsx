@@ -67,10 +67,10 @@ export function Lobby({ onCreateRoom, onJoinRoom, isConnecting, error }: LobbyPr
         <div className="flex gap-2">
           <button
             onClick={() => setMode("create")}
-            className={`flex-1 py-3 px-4 rounded-lg font-bold text-lg transition-all ${
+            className={`flex-1 py-3 px-4 rounded-lg font-bold text-lg transition-all duration-150 ${
               mode === "create"
-                ? "bg-[var(--nb-primary)] text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] translate-x-[-1px] translate-y-[-1px]"
-                : "bg-gray-100 hover:bg-gray-200"
+                ? "nb-button flex-1"
+                : "nb-button-ghost hover:bg-[var(--nb-bg-dark)]"
             }`}
           >
             <Plus className="w-5 h-5 inline mr-2" />
@@ -78,10 +78,10 @@ export function Lobby({ onCreateRoom, onJoinRoom, isConnecting, error }: LobbyPr
           </button>
           <button
             onClick={() => setMode("join")}
-            className={`flex-1 py-3 px-4 rounded-lg font-bold text-lg transition-all ${
+            className={`flex-1 py-3 px-4 rounded-lg font-bold text-lg transition-all duration-150 ${
               mode === "join"
-                ? "bg-[var(--nb-primary)] text-white shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] translate-x-[-1px] translate-y-[-1px]"
-                : "bg-gray-100 hover:bg-gray-200"
+                ? "nb-button flex-1"
+                : "nb-button-ghost hover:bg-[var(--nb-bg-dark)]"
             }`}
           >
             <LogIn className="w-5 h-5 inline mr-2" />
@@ -196,10 +196,10 @@ export function Lobby({ onCreateRoom, onJoinRoom, isConnecting, error }: LobbyPr
               <button
                 onClick={copyInviteLink}
                 disabled={!roomCode.trim()}
-                className="nb-button-secondary px-4"
+                className={`nb-button-icon ${copied ? 'nb-button-success' : 'nb-button-secondary'}`}
                 title="Copy invite link"
               >
-                {copied ? <Check className="w-5 h-5 text-green-600" /> : <Copy className="w-5 h-5" />}
+                {copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
               </button>
             </div>
           </div>

@@ -211,6 +211,47 @@ function startGame(roomCode: string, playerId: string): boolean {
   return true;
 }
 
+function playAgain(roomCode: string, playerId: string): boolean {
+  console.log("[GAME] Attempting to play again in room:", roomCode);
+  const room = rooms.get(roomCode.toUpperCase());
+
+  if (!room) {
+    console.log("[GAME] Room not found:", roomCode);
+    return false;
+  }
+
+  if (room.hostId !== playerId) {
+    console.log("[GAME] Only host can play again");
+    return false;
+  }
+
+  if (room.game.status !== "finished") {
+    console.log("[GAME] Game must be finished to play again");
+    return false;
+  }
+
+  const targetWord = getRandomWord();
+  room.game = {
+    status: "playing",
+    targetWord,
+    currentRow: 0,
+    winner: null,
+    startedAt: Date.now(),
+    endedAt: null,
+    maxGuesses: 6,
+  };
+
+  room.players.forEach((player) => {
+    player.guesses = [];
+    player.letterStates = [];
+  });
+
+  room.updatedAt = Date.now();
+
+  console.log("[GAME] Game restarted in room:", roomCode, "with new word:", targetWord);
+  return true;
+}
+
 function submitGuess(roomCode: string, playerId: string, guess: string): { success: boolean; letterStates?: LetterState[]; row?: number; isWin?: boolean; error?: string } {
   console.log("[GAME] Submitting guess:", guess, "from player:", playerId, "in room:", roomCode);
   const room = rooms.get(roomCode.toUpperCase());
@@ -480,6 +521,28 @@ export function setupSocketHandlers(httpServer: HTTPServer): SocketIOServer {
         console.log("[SOCKET] Guess processed for player:", playerId);
       } else {
         socket.emit("error", { message: result.error || "Invalid guess" });
+      }
+    });
+
+    socket.on("game:playAgain", () => {
+      console.log("[SOCKET] game:playAgain event from:", socket.id);
+
+      const roomCode = socket.data.roomCode;
+      const playerId = socket.data.playerId;
+
+      if (!roomCode || !playerId) {
+        socket.emit("error", { message: "Not in a room" });
+        return;
+      }
+
+      const success = playAgain(roomCode, playerId);
+
+      if (success) {
+        const room = rooms.get(roomCode)!;
+        io.to(roomCode).emit("game:started", { game: room.game });
+        console.log("[SOCKET] Game restarted in room:", roomCode);
+      } else {
+        socket.emit("error", { message: "Failed to restart game" });
       }
     });
 

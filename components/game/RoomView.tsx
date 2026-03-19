@@ -38,8 +38,22 @@ export function RoomView({
   const [wordRevealed, setWordRevealed] = useState(false);
   const [hasWon, setHasWon] = useState(false);
   const [hasFinished, setHasFinished] = useState(false);
+  const [shakeRow, setShakeRow] = useState<number | undefined>(undefined);
   const winnerRef = useRef<HTMLDivElement>(null);
   const boardRef = useRef<HTMLDivElement>(null);
+  const hasConfettiFired = useRef(false);
+
+  // Reset local state when game starts/restarts
+  useEffect(() => {
+    if (room.game.status === "playing" && room.game.startedAt) {
+      setCurrentGuess("");
+      setWordRevealed(false);
+      setHasWon(false);
+      setHasFinished(false);
+      setLocalError(null);
+      setShowRevealButton(false);
+    }
+  }, [room.game.status, room.game.startedAt]);
 
   // Check if current player has won or finished
   useEffect(() => {
@@ -58,7 +72,12 @@ export function RoomView({
 
   // Trigger confetti when current player wins
   useEffect(() => {
-    if (hasWon && room.game.status === "playing") {
+    const lastGuess = currentPlayer.guesses[currentPlayer.guesses.length - 1];
+    const justWon = lastGuess === room.game.targetWord && room.game.targetWord !== "";
+
+    if (justWon && room.game.status === "playing" && !hasConfettiFired.current) {
+      hasConfettiFired.current = true;
+
       // Confetti explosion
       const duration = 3000;
       const animationEnd = Date.now() + duration;
@@ -75,12 +94,12 @@ export function RoomView({
 
         const particleCount = 50 * (timeLeft / duration);
         confetti({
-          ...defaults, 
+          ...defaults,
           particleCount,
           origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
         });
         confetti({
-          ...defaults, 
+          ...defaults,
           particleCount,
           origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
         });
@@ -96,7 +115,12 @@ export function RoomView({
 
       return () => clearInterval(interval);
     }
-  }, [hasWon, room.game.status]);
+
+    // Reset confetti flag when game restarts
+    if (room.game.status === "waiting") {
+      hasConfettiFired.current = false;
+    }
+  }, [currentPlayer.guesses, room.game.targetWord, room.game.status]);
 
   // GSAP animation when someone else wins
   useEffect(() => {
@@ -135,17 +159,19 @@ export function RoomView({
     setLetterStates(states);
   }, [currentPlayer.letterStates]);
 
-  // Show store errors in local state
+  // Show store errors in local state and trigger shake
   useEffect(() => {
     if (error) {
       setLocalError(error);
+      setShakeRow(currentPlayer.guesses.length);
+      setTimeout(() => setShakeRow(undefined), 500);
       onClearError();
       const timer = setTimeout(() => {
         setLocalError(null);
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [error, onClearError]);
+  }, [error, onClearError, currentPlayer.guesses.length]);
 
   const handleKeyPress = useCallback(
     (key: string) => {
@@ -346,6 +372,7 @@ export function RoomView({
                   letterStates={currentPlayer.letterStates}
                   currentGuess={currentGuess}
                   maxGuesses={room.game.maxGuesses}
+                  shakeRow={shakeRow}
                 />
               </div>
               
@@ -357,7 +384,8 @@ export function RoomView({
                   </p>
                   <button
                     onClick={handleRevealWord}
-                    className="nb-button bg-purple-500 hover:bg-purple-600 text-white px-8 py-4 text-lg"
+                    className="nb-button nb-button-lg"
+                    style={{ backgroundColor: '#a855f7', color: 'white' }}
                   >
                     <Eye className="w-5 h-5 inline mr-2" />
                     Reveal the Word
