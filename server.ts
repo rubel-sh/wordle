@@ -4,7 +4,7 @@ import next from "next";
 import { setupSocketHandlers } from "./server/socket";
 
 const dev = process.env.NODE_ENV !== "production";
-const hostname = "localhost";
+const hostname = process.env.HOSTNAME || "0.0.0.0";
 const port = parseInt(process.env.PORT || "3000", 10);
 
 console.log("[SERVER] Starting server...");
