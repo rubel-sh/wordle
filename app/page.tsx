@@ -98,6 +98,7 @@ function GameContent() {
           />
         ) : (
           <RoomView
+            key={`${room.code}-${room.game.startedAt || 'waiting'}`}
             room={room}
             currentPlayer={currentPlayer}
             error={error}
