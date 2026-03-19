@@ -53,7 +53,7 @@ export interface ServerToClientEvents {
   "room:playerLeft": (data: { playerId: string; playerCount: number }) => void;
   "room:playerReconnected": (data: { player: Player }) => void;
   "room:playerDisconnected": (data: { playerId: string }) => void;
-  "game:started": (data: { game: GameState }) => void;
+  "game:started": (data: { game: GameState; players?: Player[] }) => void;
   "game:guessResult": (data: {
     playerId: string;
     guess: string;

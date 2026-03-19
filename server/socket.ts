@@ -539,7 +539,7 @@ export function setupSocketHandlers(httpServer: HTTPServer): SocketIOServer {
 
       if (success) {
         const room = rooms.get(roomCode)!;
-        io.to(roomCode).emit("game:started", { game: room.game });
+        io.to(roomCode).emit("game:started", { game: room.game, players: Array.from(room.players.values()) });
         console.log("[SOCKET] Game restarted in room:", roomCode);
       } else {
         socket.emit("error", { message: "Failed to restart game" });

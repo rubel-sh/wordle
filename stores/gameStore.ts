@@ -157,11 +157,20 @@ export const useGameStore = create<GameStore>((set, get) => ({
         }
       });
 
-      newSocket.on("game:started", ({ game }) => {
+      newSocket.on("game:started", ({ game, players }) => {
         console.log("[STORE] Game started");
-        const { room } = get();
+        const { room, currentPlayer } = get();
         if (room) {
-          set({ room: { ...room, game } });
+          const updatedRoom = { ...room, game };
+          if (players) {
+            updatedRoom.players = players;
+            const updatedCurrentPlayer = players.find((p: Player) => p.id === currentPlayer?.id);
+            if (updatedCurrentPlayer) {
+              set({ room: updatedRoom, currentPlayer: updatedCurrentPlayer });
+              return;
+            }
+          }
+          set({ room: updatedRoom });
         }
       });
 
