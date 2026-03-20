@@ -207,7 +207,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
           set({
             room: {
               ...room,
-              game: { ...room.game, status: "finished", winner: playerId },
+              game: { ...room.game, winner: playerId },
             },
           });
         }
