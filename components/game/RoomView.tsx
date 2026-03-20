@@ -78,7 +78,7 @@ export function RoomView({
     const lastGuess = currentPlayer.guesses[currentPlayer.guesses.length - 1];
     const justWon = lastGuess === room.game.targetWord && room.game.targetWord !== "";
 
-    if (justWon && room.game.status === "playing" && !hasConfettiFired.current) {
+    if (justWon && !hasConfettiFired.current) {
       hasConfettiFired.current = true;
 
       // Confetti explosion
@@ -123,7 +123,7 @@ export function RoomView({
     if (room.game.status === "waiting") {
       hasConfettiFired.current = false;
     }
-  }, [currentPlayer.guesses, room.game.targetWord, room.game.status]);
+  }, [currentPlayer.guesses, room.game.targetWord]);
 
   // GSAP animation when someone else wins
   useEffect(() => {
