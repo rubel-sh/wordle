@@ -295,6 +295,12 @@ export function RoomView({
                     Start
                   </button>
                 )}
+                {isHost && room.game.status === "playing" && room.game.winner && (
+                  <button onClick={onPlayAgain} className="nb-button nb-button-success px-3 py-1.5 text-sm">
+                    <Play className="w-3.5 h-3.5 inline mr-1" />
+                    Play Again
+                  </button>
+                )}
                 <button onClick={onLeaveRoom} className="nb-button nb-button-danger px-2.5 py-1.5 text-sm">
                   <LogOut className="w-3.5 h-3.5 mr-1" />
                   Leave
