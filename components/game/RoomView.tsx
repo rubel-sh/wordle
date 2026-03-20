@@ -253,7 +253,7 @@ export function RoomView({
         <div className="lg:col-span-1 space-y-4">
           {/* Header Card */}
           <div className="nb-card p-3">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <WordleLogo size="sm" />
                 <h1 className="text-xl font-black tracking-tight">Wordle</h1>
@@ -277,7 +277,7 @@ export function RoomView({
 
           {/* Room Info Card */}
           <div className="nb-card p-3">
-            <div className="flex items-center justify-between gap-2">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2 min-w-0">
                 <div className="nb-badge text-sm py-1.5 px-2 flex-shrink-0">
                   <Users className="w-3.5 h-3.5 mr-1" />
@@ -332,7 +332,7 @@ export function RoomView({
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-1.5 mb-0.5">
+                        <div className="flex flex-wrap items-center gap-1.5 mb-0.5">
                           {player.isHost && (
                             <Crown className="w-3.5 h-3.5 text-yellow-600 flex-shrink-0" />
                           )}
