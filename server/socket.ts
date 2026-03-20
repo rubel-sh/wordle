@@ -293,17 +293,6 @@ function submitGuess(roomCode: string, playerId: string, guess: string): { succe
     console.log("[GAME] Player", player.name, "won the game! Others can continue playing.");
   }
 
-  // Check if all players have finished (either won or used all guesses)
-  const allPlayersFinished = Array.from(room.players.values()).every(
-    (p) => p.guesses.length >= room.game.maxGuesses || p.guesses[p.guesses.length - 1] === room.game.targetWord
-  );
-
-  if (allPlayersFinished && room.game.status === "playing") {
-    room.game.status = "finished";
-    room.game.endedAt = Date.now();
-    console.log("[GAME] All players finished. Game ended.");
-  }
-
   return { success: true, letterStates, row: currentRow, isWin };
 }
 
