@@ -63,32 +63,51 @@ export function Lobby({ onCreateRoom, onJoinRoom, isConnecting, error }: LobbyPr
         </div>
       )}
 
-      {/* Mode Toggle */}
-      <div className="nb-card p-2 mb-6">
-        <div className="flex gap-2">
-          <button
-            onClick={() => setMode("create")}
-            className={`flex-1 py-3 px-4 rounded-lg font-bold text-lg transition-all duration-150 ${
-              mode === "create"
-                ? "nb-button flex-1"
-                : "nb-button-ghost hover:bg-[var(--nb-bg-dark)]"
-            }`}
-          >
-            <Plus className="w-5 h-5 inline mr-2" />
-            Create Room
-          </button>
-          <button
-            onClick={() => setMode("join")}
-            className={`flex-1 py-3 px-4 rounded-lg font-bold text-lg transition-all duration-150 ${
-              mode === "join"
-                ? "nb-button flex-1"
-                : "nb-button-ghost hover:bg-[var(--nb-bg-dark)]"
-            }`}
-          >
-            <LogIn className="w-5 h-5 inline mr-2" />
-            Join Room
-          </button>
+      {/* Mode Toggle - Sleek Sliding Animation */}
+      <div className="relative mb-8">
+        <div className="bg-[var(--nb-bg-dark)] rounded-2xl p-1.5 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+          <div className="relative flex">
+            {/* Sliding Background */}
+            <div
+              className="absolute top-0 bottom-0 w-1/2 bg-[var(--nb-primary)] rounded-xl border-2 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+              style={{
+                transform: mode === "create" ? "translateX(0%)" : "translateX(100%)",
+              }}
+            />
+            
+            {/* Create Button */}
+            <button
+              onClick={() => setMode("create")}
+              className={`relative z-10 flex-1 py-3.5 px-6 rounded-xl font-bold text-base transition-all duration-300 flex items-center justify-center gap-2 ${
+                mode === "create"
+                  ? "text-black"
+                  : "text-[var(--nb-text-light)] hover:text-black"
+              }`}
+            >
+              <Plus className={`w-5 h-5 transition-transform duration-300 ${mode === "create" ? "scale-110" : "scale-100"}`} />
+              <span>Create Room</span>
+            </button>
+            
+            {/* Join Button */}
+            <button
+              onClick={() => setMode("join")}
+              className={`relative z-10 flex-1 py-3.5 px-6 rounded-xl font-bold text-base transition-all duration-300 flex items-center justify-center gap-2 ${
+                mode === "join"
+                  ? "text-black"
+                  : "text-[var(--nb-text-light)] hover:text-black"
+              }`}
+            >
+              <LogIn className={`w-5 h-5 transition-transform duration-300 ${mode === "join" ? "scale-110" : "scale-100"}`} />
+              <span>Join Room</span>
+            </button>
+          </div>
         </div>
+        
+        {/* Decorative glow effect */}
+        <div 
+          className="absolute -inset-1 bg-gradient-to-r from-[var(--nb-primary)]/20 via-transparent to-[var(--nb-primary)]/20 rounded-3xl blur-xl transition-opacity duration-500 -z-10"
+          style={{ opacity: mode === "create" ? 0.6 : 0.3 }}
+        />
       </div>
 
       {/* Form */}
