@@ -236,33 +236,6 @@ export function RoomView({
 
   return (
     <div className="nb-container max-w-6xl">
-      {/* Header Card */}
-      <div className="nb-card p-6 mb-6">
-        <div className="flex items-center justify-between flex-wrap gap-4">
-          <div className="flex items-center gap-4">
-            <div className="nb-badge text-lg py-2 px-4">
-              <Users className="w-5 h-5 mr-2" />
-              {room.players.length} Players
-            </div>
-            <div className="text-lg font-mono font-bold bg-white px-4 py-2 rounded-lg border-2 border-black">
-              Room: <span className="text-[var(--nb-primary)]">{room.code}</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            {canStart && (
-              <button onClick={onStartGame} className="nb-button text-lg px-6 py-3">
-                <Play className="w-5 h-5 inline mr-2" />
-                Start Game
-              </button>
-            )}
-            <button onClick={onLeaveRoom} className="nb-button nb-button-danger px-4 py-3">
-              <LogOut className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      </div>
-
       {/* Winner Banner - Shows when current player wins */}
       {hasWon && room.game.status === "playing" && (
         <div 
@@ -302,8 +275,36 @@ export function RoomView({
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Column - Players with Mini Boards */}
-        <div className="lg:col-span-1">
+        {/* Left Column - Room Info + Players */}
+        <div className="lg:col-span-1 space-y-4">
+          {/* Room Info Card */}
+          <div className="nb-card p-4">
+            <div className="flex items-center justify-between flex-wrap gap-3">
+              <div className="flex items-center gap-3">
+                <div className="nb-badge text-base py-2 px-3">
+                  <Users className="w-4 h-4 mr-1" />
+                  {room.players.length} Players
+                </div>
+                <div className="text-base font-mono font-bold bg-white px-3 py-2 rounded-lg border-2 border-black">
+                  Room: <span className="text-[var(--nb-primary)]">{room.code}</span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {canStart && (
+                  <button onClick={onStartGame} className="nb-button px-4 py-2">
+                    <Play className="w-4 h-4 inline mr-1" />
+                    Start
+                  </button>
+                )}
+                <button onClick={onLeaveRoom} className="nb-button nb-button-danger px-3 py-2">
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Players Card */}
           <div className="nb-card p-4">
             <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
               <Target className="w-5 h-5" />
