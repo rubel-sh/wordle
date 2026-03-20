@@ -298,7 +298,8 @@ export function RoomView({
                   </button>
                 )}
                 <button onClick={onLeaveRoom} className="nb-button nb-button-danger px-3 py-2">
-                  <LogOut className="w-4 h-4" />
+                  <LogOut className="w-4 h-4 mr-1" />
+                  Leave
                 </button>
               </div>
             </div>
