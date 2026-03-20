@@ -238,34 +238,6 @@ export function RoomView({
 
   return (
     <div className="nb-container max-w-6xl">
-      {/* Winner Banner - Shows when current player wins */}
-      {hasWon && room.game.status === "playing" && (
-        <div 
-          ref={winnerRef}
-          className="nb-card p-6 mb-6 bg-gradient-to-r from-yellow-300 via-yellow-400 to-orange-400 border-4 border-black text-center"
-        >
-          <Trophy className="w-16 h-16 mx-auto mb-4 text-yellow-700" />
-          <h2 className="text-4xl font-black mb-2 text-black">🎉 You Won! 🎉</h2>
-          <p className="text-xl font-bold text-black/70">
-            Amazing! You guessed the word!
-          </p>
-          <p className="text-lg text-black/60 mt-2">
-            Waiting for other players to finish...
-          </p>
-        </div>
-      )}
-
-      {/* Someone Else Won Banner */}
-      {room.game.winner && room.game.winner !== currentPlayer.id && room.game.status === "playing" && winner && (
-        <div className="nb-card p-6 mb-6 bg-gradient-to-r from-blue-300 via-blue-400 to-purple-400 border-4 border-black text-center">
-          <Trophy className="w-12 h-12 mx-auto mb-3 text-blue-700" />
-          <h2 className="text-2xl font-black mb-2 text-black">{winner.name} Won!</h2>
-          <p className="text-lg font-bold text-black/70">
-            Keep playing to find the word!
-          </p>
-        </div>
-      )}
-
       {/* Error Display */}
       {localError && (
         <div className="nb-card p-4 mb-6 bg-[var(--nb-error)] text-white border-[var(--nb-border)] animate-pulse">
@@ -339,53 +311,70 @@ export function RoomView({
             </h3>
             
             <div className="space-y-3">
-              {sortedPlayers.map((player) => (
-                <div
-                  key={player.id}
-                  className={`p-4 rounded-lg border-2 transition-all ${
-                    player.id === currentPlayer.id 
-                      ? "bg-[var(--nb-primary)]/20 border-[var(--nb-primary)]" 
-                      : "bg-white border-black"
-                  }`}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        {player.isHost && (
-                          <Crown className="w-4 h-4 text-yellow-500 flex-shrink-0" />
-                        )}
-                        <span className="font-bold truncate">{player.name}</span>
-                        {player.isConnected ? (
-                          <Wifi className="w-3 h-3 text-green-500 flex-shrink-0" />
-                        ) : (
-                          <WifiOff className="w-3 h-3 text-red-500 flex-shrink-0" />
-                        )}
-                        {player.id === currentPlayer.id && (
-                          <span className="text-xs bg-[var(--nb-primary)] text-white px-2 py-0.5 rounded-full">
-                            You
-                          </span>
-                        )}
-                        {player.id === room.game.winner && (
-                          <span className="text-xs bg-yellow-400 text-black px-2 py-0.5 rounded-full font-bold">
-                            👑 Winner
-                          </span>
-                        )}
+              {sortedPlayers.map((player) => {
+                const lastGuess = player.guesses[player.guesses.length - 1];
+                const hasWon = lastGuess === room.game.targetWord && room.game.targetWord !== "";
+                const hasLost = player.guesses.length >= room.game.maxGuesses && !hasWon;
+                const isCurrentUser = player.id === currentPlayer.id;
+
+                return (
+                  <div
+                    key={player.id}
+                    className={`p-4 rounded-lg border-2 transition-all ${
+                      hasWon
+                        ? "bg-gradient-to-r from-yellow-200 to-orange-200 border-yellow-500"
+                        : hasLost
+                        ? "bg-gradient-to-r from-gray-200 to-gray-300 border-gray-500"
+                        : isCurrentUser
+                        ? "bg-[var(--nb-primary)]/20 border-[var(--nb-primary)]"
+                        : "bg-white border-black"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          {player.isHost && (
+                            <Crown className="w-4 h-4 text-yellow-600 flex-shrink-0" />
+                          )}
+                          <span className="font-bold truncate">{player.name}</span>
+                          {player.isConnected ? (
+                            <Wifi className="w-3 h-3 text-green-500 flex-shrink-0" />
+                          ) : (
+                            <WifiOff className="w-3 h-3 text-red-500 flex-shrink-0" />
+                          )}
+                          {isCurrentUser && (
+                            <span className="text-xs bg-[var(--nb-primary)] text-white px-2 py-0.5 rounded-full">
+                              You
+                            </span>
+                          )}
+                          {hasWon && (
+                            <span className="text-xs bg-yellow-500 text-white px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                              <Trophy className="w-3 h-3" />
+                              Winner
+                            </span>
+                          )}
+                          {hasLost && (
+                            <span className="text-xs bg-gray-500 text-white px-2 py-0.5 rounded-full font-bold">
+                              Out of Guesses
+                            </span>
+                          )}
+                        </div>
+                        <div className="text-sm text-[var(--nb-text-light)]">
+                          {player.guesses.length} / {room.game.maxGuesses} guesses
+                        </div>
                       </div>
-                      <div className="text-sm text-[var(--nb-text-light)]">
-                        {player.guesses.length} / {room.game.maxGuesses} guesses
-                      </div>
+
+                      {/* Mini Board */}
+                      <MiniBoard
+                        guesses={player.guesses}
+                        letterStates={player.letterStates}
+                        maxGuesses={room.game.maxGuesses}
+                        size="sm"
+                      />
                     </div>
-                    
-                    {/* Mini Board */}
-                    <MiniBoard 
-                      guesses={player.guesses}
-                      letterStates={player.letterStates}
-                      maxGuesses={room.game.maxGuesses}
-                      size="sm"
-                    />
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
