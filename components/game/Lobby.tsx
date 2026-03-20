@@ -70,27 +70,27 @@ export function Lobby({ onCreateRoom, onJoinRoom, isConnecting, error }: LobbyPr
             {/* Create Button */}
             <button
               onClick={() => setMode("create")}
-              className={`relative z-10 flex-1 py-3.5 px-6 rounded-xl font-bold text-base transition-all duration-300 flex items-center justify-center gap-2 ${
+              className={`relative z-10 flex-1 py-3.5 px-2 sm:px-6 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-1 sm:gap-2 ${
                 mode === "create"
                   ? "text-black"
                   : "text-[var(--nb-text-light)] hover:text-black"
               }`}
             >
               <Plus className={`w-5 h-5 transition-transform duration-300 ${mode === "create" ? "scale-110" : "scale-100"}`} />
-              <span>Create Room</span>
+              <span>Create</span>
             </button>
-            
+
             {/* Join Button */}
             <button
               onClick={() => setMode("join")}
-              className={`relative z-10 flex-1 py-3.5 px-6 rounded-xl font-bold text-base transition-all duration-300 flex items-center justify-center gap-2 ${
+              className={`relative z-10 flex-1 py-3.5 px-2 sm:px-6 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-1 sm:gap-2 ${
                 mode === "join"
                   ? "text-black"
                   : "text-[var(--nb-text-light)] hover:text-black"
               }`}
             >
               <LogIn className={`w-5 h-5 transition-transform duration-300 ${mode === "join" ? "scale-110" : "scale-100"}`} />
-              <span>Join Room</span>
+              <span>Join</span>
             </button>
           </div>
         </div>
