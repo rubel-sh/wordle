@@ -180,7 +180,6 @@ export function RoomView({
     (key: string) => {
       if (room.game.status !== "playing") return;
       if (currentPlayer.guesses.length >= room.game.maxGuesses) return;
-      if (hasWon) return; // Can't type if already won
 
       if (key !== "ENTER") {
         setLocalError(null);
@@ -197,7 +196,7 @@ export function RoomView({
         setCurrentGuess((prev) => prev + key);
       }
     },
-    [currentGuess, room.game.status, currentPlayer.guesses.length, room.game.maxGuesses, onSubmitGuess, hasWon]
+    [currentGuess, room.game.status, currentPlayer.guesses.length, room.game.maxGuesses, onSubmitGuess]
   );
 
   useEffect(() => {
@@ -434,23 +433,10 @@ export function RoomView({
                 </div>
               )}
               
-              {!hasWon && !hasFinished && (
-                <div className="nb-card p-6">
-                  <Keyboard onKeyPress={handleKeyPress} letterStates={letterStates} />
-                </div>
-              )}
-
-              {(hasWon || hasFinished) && room.game.status === "playing" && (
-                <div className="nb-card p-8 text-center bg-gray-50">
-                  <div className="text-6xl mb-4">⏳</div>
-                  <h3 className="text-2xl font-bold mb-2">
-                    {hasWon ? "You Won!" : "Out of Guesses"}
-                  </h3>
-                  <p className="text-[var(--nb-text-light)] text-lg">
-                    Waiting for other players to finish...
-                  </p>
-                </div>
-              )}
+              {/* Keyboard always shown while game is playing */}
+              <div className="nb-card p-6">
+                <Keyboard onKeyPress={handleKeyPress} letterStates={letterStates} />
+              </div>
             </>
           )}
 
