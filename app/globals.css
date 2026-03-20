@@ -581,6 +581,26 @@
   animation: bounce 0.3s ease-in-out;
 }
 
+/* Laptop screens - make tiles and keyboard more compact */
+@media (max-width: 1024px) and (min-width: 641px) {
+  .nb-tile {
+    width: 3.25rem;
+    height: 3.25rem;
+    font-size: 1.625rem;
+  }
+
+  .nb-key {
+    min-width: 2rem;
+    height: 3rem;
+    font-size: 0.9rem;
+  }
+
+  .nb-container {
+    max-width: 900px;
+    padding: 0.75rem;
+  }
+}
+
 /* Smooth transitions for all interactive elements */
 button, input {
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);

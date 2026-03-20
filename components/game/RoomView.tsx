@@ -252,23 +252,23 @@ export function RoomView({
         {/* Left Column - Header + Room Info + Players */}
         <div className="lg:col-span-1 space-y-4">
           {/* Header Card */}
-          <div className="nb-card p-4">
+          <div className="nb-card p-3">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
                 <WordleLogo size="sm" />
-                <h1 className="text-2xl font-black tracking-tight">Wordle</h1>
+                <h1 className="text-xl font-black tracking-tight">Wordle</h1>
               </div>
 
-              <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg border-2 border-black">
+              <div className="flex items-center gap-1.5 bg-white px-2 py-1.5 rounded-lg border-2 border-black">
                 {isConnected ? (
                   <>
-                    <Wifi className="w-4 h-4 text-green-500" />
-                    <span className="text-sm font-bold text-green-600">Connected</span>
+                    <Wifi className="w-3.5 h-3.5 text-green-500" />
+                    <span className="text-xs font-bold text-green-600">Connected</span>
                   </>
                 ) : (
                   <>
-                    <WifiOff className="w-4 h-4 text-red-500" />
-                    <span className="text-sm font-bold text-red-600">Disconnected</span>
+                    <WifiOff className="w-3.5 h-3.5 text-red-500" />
+                    <span className="text-xs font-bold text-red-600">Disconnected</span>
                   </>
                 )}
               </div>
@@ -276,27 +276,27 @@ export function RoomView({
           </div>
 
           {/* Room Info Card */}
-          <div className="nb-card p-4">
-            <div className="flex items-center justify-between flex-wrap gap-3">
-              <div className="flex items-center gap-3">
-                <div className="nb-badge text-base py-2 px-3">
-                  <Users className="w-4 h-4 mr-1" />
+          <div className="nb-card p-3">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <div className="flex items-center gap-2">
+                <div className="nb-badge text-sm py-1.5 px-2">
+                  <Users className="w-3.5 h-3.5 mr-1" />
                   {room.players.length} Players
                 </div>
-                <div className="text-base font-mono font-bold bg-white px-3 py-2 rounded-lg border-2 border-black">
+                <div className="text-sm font-mono font-bold bg-white px-2 py-1.5 rounded-lg border-2 border-black">
                   Room: <span className="text-[var(--nb-primary)]">{room.code}</span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5">
                 {canStart && (
-                  <button onClick={onStartGame} className="nb-button px-4 py-2">
-                    <Play className="w-4 h-4 inline mr-1" />
+                  <button onClick={onStartGame} className="nb-button px-3 py-1.5 text-sm">
+                    <Play className="w-3.5 h-3.5 inline mr-1" />
                     Start
                   </button>
                 )}
-                <button onClick={onLeaveRoom} className="nb-button nb-button-danger px-3 py-2">
-                  <LogOut className="w-4 h-4 mr-1" />
+                <button onClick={onLeaveRoom} className="nb-button nb-button-danger px-2.5 py-1.5 text-sm">
+                  <LogOut className="w-3.5 h-3.5 mr-1" />
                   Leave
                 </button>
               </div>
@@ -304,13 +304,13 @@ export function RoomView({
           </div>
 
           {/* Players Card */}
-          <div className="nb-card p-4">
-            <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-              <Target className="w-5 h-5" />
+          <div className="nb-card p-3">
+            <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
+              <Target className="w-4 h-4" />
               Players
             </h3>
-            
-            <div className="space-y-3">
+
+            <div className="space-y-2">
               {sortedPlayers.map((player) => {
                 const lastGuess = player.guesses[player.guesses.length - 1];
                 const hasWon = lastGuess === room.game.targetWord && room.game.targetWord !== "";
@@ -320,7 +320,7 @@ export function RoomView({
                 return (
                   <div
                     key={player.id}
-                    className={`p-4 rounded-lg border-2 transition-all ${
+                    className={`p-2.5 rounded-lg border-2 transition-all ${
                       hasWon
                         ? "bg-gradient-to-r from-yellow-200 to-orange-200 border-yellow-500"
                         : hasLost
@@ -330,36 +330,36 @@ export function RoomView({
                         : "bg-white border-black"
                     }`}
                   >
-                    <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
+                        <div className="flex items-center gap-1.5 mb-0.5">
                           {player.isHost && (
-                            <Crown className="w-4 h-4 text-yellow-600 flex-shrink-0" />
+                            <Crown className="w-3.5 h-3.5 text-yellow-600 flex-shrink-0" />
                           )}
-                          <span className="font-bold truncate">{player.name}</span>
+                          <span className="font-bold text-sm truncate">{player.name}</span>
                           {player.isConnected ? (
-                            <Wifi className="w-3 h-3 text-green-500 flex-shrink-0" />
+                            <Wifi className="w-2.5 h-2.5 text-green-500 flex-shrink-0" />
                           ) : (
-                            <WifiOff className="w-3 h-3 text-red-500 flex-shrink-0" />
+                            <WifiOff className="w-2.5 h-2.5 text-red-500 flex-shrink-0" />
                           )}
                           {isCurrentUser && (
-                            <span className="text-xs bg-[var(--nb-primary)] text-white px-2 py-0.5 rounded-full">
+                            <span className="text-[10px] bg-[var(--nb-primary)] text-white px-1.5 py-0.5 rounded-full">
                               You
                             </span>
                           )}
                           {hasWon && (
-                            <span className="text-xs bg-yellow-500 text-white px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
-                              <Trophy className="w-3 h-3" />
+                            <span className="text-[10px] bg-yellow-500 text-white px-1.5 py-0.5 rounded-full font-bold flex items-center gap-0.5">
+                              <Trophy className="w-2.5 h-2.5" />
                               Winner
                             </span>
                           )}
                           {hasLost && (
-                            <span className="text-xs bg-gray-500 text-white px-2 py-0.5 rounded-full font-bold">
-                              Out of Guesses
+                            <span className="text-[10px] bg-gray-500 text-white px-1.5 py-0.5 rounded-full font-bold">
+                              Out
                             </span>
                           )}
                         </div>
-                        <div className="text-sm text-[var(--nb-text-light)]">
+                        <div className="text-xs text-[var(--nb-text-light)]">
                           {player.guesses.length} / {room.game.maxGuesses} guesses
                         </div>
                       </div>
@@ -383,7 +383,7 @@ export function RoomView({
         <div className="lg:col-span-2">
           {isPlaying && (
             <>
-              <div ref={boardRef} className="nb-card p-8 mb-4">
+              <div ref={boardRef} className="nb-card p-4 mb-3">
                 <Board
                   guesses={currentPlayer.guesses}
                   letterStates={currentPlayer.letterStates}
@@ -392,19 +392,19 @@ export function RoomView({
                   shakeRow={shakeRow}
                 />
               </div>
-              
+
               {/* Reveal Word Button - Shows when finished but game still ongoing */}
               {showRevealButton && !wordRevealed && !hasWon && (
-                <div className="nb-card p-6 mb-4 bg-gradient-to-r from-purple-100 to-pink-100 border-2 border-purple-400 text-center">
-                  <p className="text-lg font-bold text-purple-800 mb-4">
+                <div className="nb-card p-4 mb-3 bg-gradient-to-r from-purple-100 to-pink-100 border-2 border-purple-400 text-center">
+                  <p className="text-base font-bold text-purple-800 mb-3">
                     You&apos;ve used all your guesses!
                   </p>
                   <button
                     onClick={handleRevealWord}
-                    className="nb-button nb-button-lg"
+                    className="nb-button"
                     style={{ backgroundColor: '#a855f7', color: 'white' }}
                   >
-                    <Eye className="w-5 h-5 inline mr-2" />
+                    <Eye className="w-4 h-4 inline mr-1" />
                     Reveal the Word
                   </button>
                 </div>
@@ -412,34 +412,34 @@ export function RoomView({
 
               {/* Revealed Word Display */}
               {wordRevealed && (
-                <div className="revealed-word nb-card p-6 mb-4 bg-gradient-to-r from-yellow-200 to-orange-200 border-4 border-black text-center">
-                  <p className="text-sm font-bold text-black/60 uppercase tracking-wide mb-2">
+                <div className="revealed-word nb-card p-4 mb-3 bg-gradient-to-r from-yellow-200 to-orange-200 border-4 border-black text-center">
+                  <p className="text-xs font-bold text-black/60 uppercase tracking-wide mb-1">
                     The word was
                   </p>
-                  <p className="text-5xl font-black tracking-[0.2em] text-black">
+                  <p className="text-4xl font-black tracking-[0.2em] text-black">
                     {room.game.targetWord}
                   </p>
                 </div>
               )}
-              
+
               {/* Keyboard always shown while game is playing */}
-              <div className="nb-card p-6">
+              <div className="nb-card p-4">
                 <Keyboard onKeyPress={handleKeyPress} letterStates={letterStates} />
               </div>
             </>
           )}
 
           {isFinished && (
-            <div className="nb-card p-8 text-center">
-              <Trophy className="w-20 h-20 mx-auto mb-6 text-yellow-500" />
-              <h2 className="text-3xl font-bold mb-4">
+            <div className="nb-card p-6 text-center">
+              <Trophy className="w-16 h-16 mx-auto mb-4 text-yellow-500" />
+              <h2 className="text-2xl font-bold mb-3">
                 {winner ? `${winner.name} Wins!` : "Game Over"}
               </h2>
-              <p className="text-xl mb-6">
-                The word was: <span className="font-bold text-2xl text-[var(--nb-primary)]">{room.game.targetWord}</span>
+              <p className="text-lg mb-4">
+                The word was: <span className="font-bold text-xl text-[var(--nb-primary)]">{room.game.targetWord}</span>
               </p>
               {isHost && (
-                <button onClick={onPlayAgain} className="nb-button text-lg px-8 py-4">
+                <button onClick={onPlayAgain} className="nb-button px-6 py-3">
                   Play Again
                 </button>
               )}
@@ -447,17 +447,17 @@ export function RoomView({
           )}
 
           {room.game.status === "waiting" && (
-            <div className="nb-card p-12 text-center">
-              <div className="text-6xl mb-6">🎮</div>
-              <h3 className="text-2xl font-bold mb-4">Waiting to Start</h3>
-              <p className="text-[var(--nb-text-light)] text-lg">
+            <div className="nb-card p-8 text-center">
+              <div className="text-5xl mb-4">🎮</div>
+              <h3 className="text-xl font-bold mb-3">Waiting to Start</h3>
+              <p className="text-[var(--nb-text-light)] text-base">
                 {isHost
                   ? "Click 'Start Game' when all players are ready!"
                   : "Waiting for host to start the game..."}
               </p>
-              
+
               {isHost && room.players.length > 1 && (
-                <div className="mt-6 text-sm text-[var(--nb-text-light)]">
+                <div className="mt-4 text-xs text-[var(--nb-text-light)]">
                   {room.players.length} players ready to play
                 </div>
               )}
