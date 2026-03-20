@@ -523,21 +523,27 @@
     --nb-shadow-lg: 3px 3px 0px var(--nb-shadow);
     --nb-shadow-xl: 4px 4px 0px var(--nb-shadow);
   }
-  
+
   .nb-tile {
-    width: 3rem;
-    height: 3rem;
-    font-size: 1.5rem;
-  }
-  
-  .nb-key {
-    min-width: 1.75rem;
+    width: 2.75rem;
     height: 2.75rem;
-    font-size: 0.875rem;
+    font-size: 1.25rem;
   }
-  
+
+  .nb-key {
+    min-width: 1.5rem;
+    height: 2.5rem;
+    font-size: 0.75rem;
+    padding: 0 0.25rem;
+  }
+
   .nb-title {
     font-size: 2rem;
+  }
+
+  .nb-container {
+    padding: 0.5rem;
+    overflow-x: hidden;
   }
 }
 

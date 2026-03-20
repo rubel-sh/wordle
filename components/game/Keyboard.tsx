@@ -60,7 +60,7 @@ export function Keyboard({ onKeyPress, letterStates = new Map() }: KeyboardProps
                 className={`
                   nb-key 
                   ${status || ""} 
-                  ${isSpecial ? "px-4 min-w-[4rem]" : ""}
+                  ${isSpecial ? "px-2 sm:px-4 min-w-[3rem] sm:min-w-[4rem]" : ""}
                   ${isPressed ? "nb-key-pressed" : ""}
                 `}
               >

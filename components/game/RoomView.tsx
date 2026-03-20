@@ -277,18 +277,18 @@ export function RoomView({
 
           {/* Room Info Card */}
           <div className="nb-card p-3">
-            <div className="flex items-center justify-between flex-wrap gap-2">
-              <div className="flex items-center gap-2">
-                <div className="nb-badge text-sm py-1.5 px-2">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 min-w-0">
+                <div className="nb-badge text-sm py-1.5 px-2 flex-shrink-0">
                   <Users className="w-3.5 h-3.5 mr-1" />
-                  {room.players.length} Players
+                  {room.players.length}
                 </div>
-                <div className="text-sm font-mono font-bold bg-white px-2 py-1.5 rounded-lg border-2 border-black">
-                  Room: <span className="text-[var(--nb-primary)]">{room.code}</span>
+                <div className="text-sm font-mono font-bold bg-white px-2 py-1.5 rounded-lg border-2 border-black truncate">
+                  <span className="text-[var(--nb-primary)]">{room.code}</span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5 flex-shrink-0">
                 {canStart && (
                   <button onClick={onStartGame} className="nb-button px-3 py-1.5 text-sm">
                     <Play className="w-3.5 h-3.5 inline mr-1" />
