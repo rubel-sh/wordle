@@ -51,27 +51,43 @@
   body {
     background-color: var(--nb-bg);
     background-image:
-      repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 2px,
-        rgba(139, 119, 101, 0.03) 2px,
-        rgba(139, 119, 101, 0.03) 4px
-      ),
+      /* Horizontal wood grain lines */
       repeating-linear-gradient(
         0deg,
         transparent,
         transparent 2px,
-        rgba(160, 140, 120, 0.02) 2px,
-        rgba(160, 140, 120, 0.02) 30px
+        rgba(160, 130, 100, 0.08) 2px,
+        rgba(160, 130, 100, 0.08) 3px,
+        transparent 3px,
+        transparent 5px,
+        rgba(170, 140, 110, 0.05) 5px,
+        rgba(170, 140, 110, 0.05) 6px,
+        transparent 6px,
+        transparent 12px,
+        rgba(150, 120, 90, 0.06) 12px,
+        rgba(150, 120, 90, 0.06) 14px,
+        transparent 14px,
+        transparent 18px,
+        rgba(165, 135, 105, 0.04) 18px,
+        rgba(165, 135, 105, 0.04) 20px
       ),
-      repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 1px,
-        rgba(180, 160, 140, 0.015) 1px,
-        rgba(180, 160, 140, 0.015) 2px
+      /* Wood knots texture */
+      radial-gradient(
+        ellipse 80px 30px at 20% 40%,
+        rgba(140, 110, 80, 0.1) 0%,
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 60px 25px at 70% 70%,
+        rgba(145, 115, 85, 0.08) 0%,
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 90px 35px at 50% 20%,
+        rgba(135, 105, 75, 0.06) 0%,
+        transparent 70%
       );
+    background-size: 100% 100px, 100% 100%, 100% 100%, 100% 100%;
     color: var(--nb-text);
     font-family: var(--font-geist-sans), system-ui, sans-serif;
   }
@@ -82,19 +98,24 @@
     background-color: var(--nb-bg-dark);
     background-image:
       repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 3px,
-        rgba(120, 100, 80, 0.02) 3px,
-        rgba(120, 100, 80, 0.02) 6px
-      ),
-      repeating-linear-gradient(
         0deg,
         transparent,
-        transparent 3px,
-        rgba(140, 120, 100, 0.015) 3px,
-        rgba(140, 120, 100, 0.015) 40px
+        transparent 1px,
+        rgba(150, 120, 90, 0.1) 1px,
+        rgba(150, 120, 90, 0.1) 2px,
+        transparent 2px,
+        transparent 4px,
+        rgba(160, 130, 100, 0.07) 4px,
+        rgba(160, 130, 100, 0.07) 5px,
+        transparent 5px,
+        transparent 8px
+      ),
+      radial-gradient(
+        ellipse 60px 20px at 30% 30%,
+        rgba(140, 110, 80, 0.12) 0%,
+        transparent 60%
       );
+    background-size: 100% 60px, 100% 100%;
     border: var(--nb-border-width) solid var(--nb-border);
     border-radius: var(--nb-radius);
     box-shadow: var(--nb-shadow-md);
