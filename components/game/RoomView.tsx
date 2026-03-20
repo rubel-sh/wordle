@@ -45,6 +45,7 @@ export function RoomView({
   const winnerRef = useRef<HTMLDivElement>(null);
   const boardRef = useRef<HTMLDivElement>(null);
   const hasConfettiFired = useRef(false);
+  const confettiInterval = useRef<NodeJS.Timeout | null>(null);
 
   // Reset local state when game starts/restarts
   useEffect(() => {
@@ -73,7 +74,7 @@ export function RoomView({
     }
   }, [currentPlayer.guesses, room.game.targetWord, room.game.maxGuesses, room.game.status]);
 
-  // Trigger confetti when current player wins
+  // Trigger confetti when current player wins - continues until game restarts
   useEffect(() => {
     const lastGuess = currentPlayer.guesses[currentPlayer.guesses.length - 1];
     const justWon = lastGuess === room.game.targetWord && room.game.targetWord !== "";
@@ -81,32 +82,23 @@ export function RoomView({
     if (justWon && !hasConfettiFired.current) {
       hasConfettiFired.current = true;
 
-      // Confetti explosion
-      const duration = 3000;
-      const animationEnd = Date.now() + duration;
+      // Continuous confetti celebration
       const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
       const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
-      const interval: any = setInterval(function() {
-        const timeLeft = animationEnd - Date.now();
-
-        if (timeLeft <= 0) {
-          return clearInterval(interval);
-        }
-
-        const particleCount = 50 * (timeLeft / duration);
+      confettiInterval.current = setInterval(function() {
         confetti({
           ...defaults,
-          particleCount,
+          particleCount: 30,
           origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
         });
         confetti({
           ...defaults,
-          particleCount,
+          particleCount: 30,
           origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
         });
-      }, 250);
+      }, 400);
 
       // GSAP animation for winner banner
       if (winnerRef.current) {
@@ -116,14 +108,22 @@ export function RoomView({
         );
       }
 
-      return () => clearInterval(interval);
+      return () => {
+        if (confettiInterval.current) {
+          clearInterval(confettiInterval.current);
+        }
+      };
     }
 
-    // Reset confetti flag when game restarts
+    // Stop confetti and reset flag when game restarts
     if (room.game.status === "waiting") {
       hasConfettiFired.current = false;
+      if (confettiInterval.current) {
+        clearInterval(confettiInterval.current);
+        confettiInterval.current = null;
+      }
     }
-  }, [currentPlayer.guesses, room.game.targetWord]);
+  }, [currentPlayer.guesses, room.game.targetWord, room.game.status]);
 
   // GSAP animation when someone else wins
   useEffect(() => {
