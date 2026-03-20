@@ -7,6 +7,7 @@ import { Board } from "./Board";
 import { Keyboard } from "./Keyboard";
 import { MiniBoard } from "./MiniBoard";
 import { DevWordReveal } from "./DevWordReveal";
+import { WordleLogo } from "./WordleLogo";
 import confetti from "canvas-confetti";
 import { gsap } from "gsap";
 
@@ -14,6 +15,7 @@ interface RoomViewProps {
   room: RoomData;
   currentPlayer: Player;
   error: string | null;
+  isConnected: boolean;
   onStartGame: () => void;
   onSubmitGuess: (guess: string) => void;
   onLeaveRoom: () => void;
@@ -25,6 +27,7 @@ export function RoomView({
   room,
   currentPlayer,
   error,
+  isConnected,
   onStartGame,
   onSubmitGuess,
   onLeaveRoom,
@@ -275,8 +278,32 @@ export function RoomView({
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Column - Room Info + Players */}
+        {/* Left Column - Header + Room Info + Players */}
         <div className="lg:col-span-1 space-y-4">
+          {/* Header Card */}
+          <div className="nb-card p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <WordleLogo size="sm" />
+                <h1 className="text-2xl font-black tracking-tight">Wordle</h1>
+              </div>
+
+              <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg border-2 border-black">
+                {isConnected ? (
+                  <>
+                    <Wifi className="w-4 h-4 text-green-500" />
+                    <span className="text-sm font-bold text-green-600">Connected</span>
+                  </>
+                ) : (
+                  <>
+                    <WifiOff className="w-4 h-4 text-red-500" />
+                    <span className="text-sm font-bold text-red-600">Disconnected</span>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+
           {/* Room Info Card */}
           <div className="nb-card p-4">
             <div className="flex items-center justify-between flex-wrap gap-3">
