@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Users, Plus, LogIn, Copy, Check } from "lucide-react";
+import { Users, Plus, LogIn } from "lucide-react";
 import { WordleLogo } from "./WordleLogo";
 
 interface LobbyProps {
@@ -15,7 +15,6 @@ export function Lobby({ onCreateRoom, onJoinRoom, isConnecting, error }: LobbyPr
   const [playerName, setPlayerName] = useState("");
   const [roomCode, setRoomCode] = useState("");
   const [mode, setMode] = useState<"create" | "join">("create");
-  const [copied, setCopied] = useState(false);
 
   const handleCreateRoom = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,13 +30,6 @@ export function Lobby({ onCreateRoom, onJoinRoom, isConnecting, error }: LobbyPr
       console.log("[LOBBY] Joining room:", roomCode, "as:", playerName);
       onJoinRoom(roomCode.trim().toUpperCase(), playerName.trim());
     }
-  };
-
-  const copyInviteLink = () => {
-    const link = `${window.location.origin}?code=${roomCode}`;
-    navigator.clipboard.writeText(link);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -198,32 +190,7 @@ export function Lobby({ onCreateRoom, onJoinRoom, isConnecting, error }: LobbyPr
           </form>
         )}
 
-        {/* Invite Link Section */}
-        {mode === "join" && (
-          <div className="mt-6 pt-6 border-t-2 border-black/10">
-            <p className="text-sm text-center text-[var(--nb-text-light)] mb-3">
-              Or paste a room code from an invite link
-            </p>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={roomCode}
-                onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
-                placeholder="Paste room code"
-                className="nb-input flex-1 text-center font-mono"
-                maxLength={6}
-              />
-              <button
-                onClick={copyInviteLink}
-                disabled={!roomCode.trim()}
-                className={`nb-button-icon ${copied ? 'nb-button-success' : 'nb-button-secondary'}`}
-                title="Copy invite link"
-              >
-                {copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
-              </button>
-            </div>
-          </div>
-        )}
+
       </div>
 
       {/* Footer */}
