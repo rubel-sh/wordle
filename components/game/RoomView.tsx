@@ -310,7 +310,7 @@ export function RoomView({
               Players
             </h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 gap-2">
               {sortedPlayers.map((player) => {
                 const lastGuess = player.guesses[player.guesses.length - 1];
                 const hasWon = lastGuess === room.game.targetWord && room.game.targetWord !== "";
